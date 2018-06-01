@@ -1,0 +1,208 @@
+h1{
+    text-align: center;
+    margin:30px;
+    font-size: 60px;
+    color:rgb(84, 88, 88);
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    margin-top:30px;
+}
+
+input{
+    width:30%;
+    margin-top: 6px;
+    margin-bottom:13px;
+    text-align:center;
+    background: rgb(226, 226, 226);
+    border-radius: 5px;
+}
+
+*{
+    font-family: verdana;
+    color: gray;
+    background:rgb(228, 240, 237);
+}
+
+#buttons{
+    display:flex;
+}
+
+button{
+    background:rgb(226, 226, 226);
+    border-radius:3px;
+    padding-top: 5px;
+    padding-bottom:5px;
+    margin-left:8px;
+}
+
+#mensajes{
+    text-align: center;
+    margin-top:15px;
+    color:red;
+    font-weight: 700;
+}
+
+header{
+    margin-top:25px;
+   float: right;
+}
+
+#user{
+    margin-right:100px;
+    font-weight: 700;
+    cursor:pointer;
+}
+
+/* li{
+    color:rgb(75, 71, 71);
+    font-weight: 700;
+    margin-top:5px; */
+/* } */
+
+hr{
+    width:100%;
+    color:gray;
+    border:initial;
+}
+
+.ocultar{
+    display:none;
+}
+
+.mostrar{
+    display:block;
+}
+
+#error{
+    text-align: center;
+    margin-top:15px;
+    color:red;
+    font-weight: 700;
+}
+
+.dropdown{
+    list-style: none;
+    display:none;
+}
+
+.dropdownver{
+    list-style: none;
+    display:block;
+}
+
+h3{
+    text-align: center;
+}
+
+.loader {
+    margin:0 auto;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-right: 16px solid green;
+    border-bottom: 16px solid red;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  #container{
+width: 80%;
+margin: 0 auto;
+  }
+
+  #buttons3{
+      text-align: center;
+      margin-top: 15px;
+  }
+ 
+  #ejecutor,#ejecutor2{
+    width:30%;
+    margin-top: 15px;
+    text-align-last: center;
+  }
+
+  #listarTareas{
+    text-align: center;
+  }
+
+  td {
+    border: 1px solid rgb(194, 197, 197);
+    color:gray;
+}
+
+table{
+    width:100%;
+    text-align:center;
+    align-items: center;
+    margin-bottom:40px;
+    /* padding-left:25%;
+    padding-right:25%; */
+}
+
+th{
+    margin-bottom: 10px;
+    align-content: center;
+    border: 1px solid rgb(90, 116, 116);
+    color:gray;
+  }  
+
+td{
+    font-weight: 300;
+}
+
+#añadir{
+    margin-top:25px;
+}
+
+#addTarea{
+    background:rgb(255,0,0,0.5);
+    color:white;
+    height: 70px;
+    width:70px;
+    border-radius:50%;
+    border: 2px solid gray;
+    display:flex;
+    justify-content:space-around;
+    font-size:50px;
+    position: fixed;;
+    bottom:30px;
+    right:40px;
+    cursor:pointer;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+li a {
+    display: block;
+    color:gray;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+    background-color: #555;
+    color: white;
+}
