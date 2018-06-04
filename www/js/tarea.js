@@ -90,8 +90,14 @@ window.onload = function () {
         req.open("POST", "/datosuser", true);
         req.setRequestHeader("Content-Type", "application/json");
         req.addEventListener("load", function () {
-            if (req.response == "ok") {
+            var result = JSON.parse(req.response);
+            if (result.resultado == "ok") {
+                console.log(result);
                 alert("Datos actualizados correctamente");
+                document.getElementById("avatarT").src = result.imagen;
+                document.getElementById("listarTareas").setAttribute("class", "mostrar");
+                document.getElementById("datosUsuario").setAttribute("class", "ocultar");
+                document.getElementById("userOptions").setAttribute("class", "ocultar");
             } else {
                 alert("Error al actualizar los datos");
             }
@@ -106,6 +112,7 @@ window.onload = function () {
             usuario: document.getElementById("usuario").value,
             correo: document.getElementById("correo").value,
             contraseña: document.getElementById("contraseña").value,
+            avatar: document.getElementById("imgTemp").src
         }
         req.send(JSON.stringify(datos));
     }
@@ -144,14 +151,16 @@ window.onload = function () {
 
     this.document.getElementById("addTarea").onclick = function () {
         if (document.getElementById("crearTarea").getAttribute("class") == "ocultar") {
-            document.getElementById("crearTarea").setAttribute("class", "mostrar")
+            document.getElementById("crearTarea").setAttribute("class", "mostrar");
+            document.getElementById("datosUsuario").setAttribute("class","ocultar");
+           
         } else {
             document.getElementById("crearTarea").setAttribute("class", "ocultar")
         }
     }
 
 
-    this.document.getElementById("act_Tarea").onclick=function(ev){
+    this.document.getElementById("act_Tarea").onclick = function (ev) {
         ev.preventDefault();
         var req = new XMLHttpRequest();
         req.open("POST", "/actualizartarea", true);
@@ -174,7 +183,7 @@ window.onload = function () {
         });
 
         var datos = {
-            id:document.getElementById("idtarea").value,
+            id: document.getElementById("idtarea").value,
             titulo: document.getElementById("act_titulo").value,
             descripcion: document.getElementById("act_descripcion").value,
             ejecutor: document.getElementById("ejecutor2").value,
@@ -184,26 +193,19 @@ window.onload = function () {
         req.send(JSON.stringify(datos));
     }
 
-    document.getElementById('foto').addEventListener('change', handleFileSelect, false);
-
+    document.getElementById('avatar').addEventListener('change', archivo, false);
 }
 
 
-function handleFileSelect(evt) {
-    var files = evt.target.files; 
-    
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                  f.size, ' bytes, last modified: ',
-                  f.lastModifiedDate.toLocaleDateString(), '</li>');
+function archivo(evt) {
+    var file = evt.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function (f) {
+        // console.log(f.target.result);
+        document.getElementById("imgTemp").src = f.target.result;
     }
-  console.log(output);
-  }
-
-
-
-
+    reader.readAsDataURL(file);
+}
 
 function peticionEditar(id) {
     var req = new XMLHttpRequest();
@@ -211,13 +213,14 @@ function peticionEditar(id) {
     req.open("GET", url, true);
 
     req.addEventListener("load", function () {
-        var datos=JSON.parse(req.response);
-        document.getElementById("idtarea").value=datos.tarea.id;
-        document.getElementById("act_titulo").value=datos.tarea.titulo;
-        document.getElementById("act_descripcion").value=datos.tarea.descripcion;
-        document.getElementById("ejecutor2").value=datos.tarea.ejecutor;
-        document.getElementById("act_fecha").value=String(datos.tarea.fecha).substr(0,10);
-        document.getElementById("actualizarTarea").setAttribute("class","mostrar");
+        var datos = JSON.parse(req.response);
+        document.getElementById("idtarea").value = datos.tarea.id;
+        document.getElementById("act_titulo").value = datos.tarea.titulo;
+        document.getElementById("act_descripcion").value = datos.tarea.descripcion;
+        document.getElementById("ejecutor2").value = datos.tarea.ejecutor;
+        document.getElementById("act_fecha").value = String(datos.tarea.fecha).substr(0, 10);
+        document.getElementById("actualizarTarea").setAttribute("class", "mostrar");
+
     })
     req.addEventListener("error", function () {
 
@@ -241,22 +244,20 @@ function peticionEliminar(id) {
     req.send(null);
 }
 
-function cambioEstado(id){
+function cambioEstado(id) {
     var req = new XMLHttpRequest();
     var url = "/cambioestado?id=" + id;
     req.open("GET", url, true);
 
     req.addEventListener("load", function () {
-        var datos=JSON.parse(req.response);
+        var datos = JSON.parse(req.response);
         llenarTablaTareas(datos.tareas);
     })
     req.addEventListener("error", function () {
 
     });
     req.send(null);
-    }
- 
-
+}
 
 function actualizartabla() {
     var req = new XMLHttpRequest();

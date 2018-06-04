@@ -51,11 +51,7 @@ header{
    float: right;
 }
 
-#user{
-    margin-right:100px;
-    font-weight: 700;
-    cursor:pointer;
-}
+
 
 /* li{
     color:rgb(75, 71, 71);
@@ -205,4 +201,27 @@ li a {
 li a:hover {
     background-color: #555;
     color: white;
+}
+
+#av{
+text-align: center;
+}
+
+
+#avatarT{
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    margin-right:50px;
+    vertical-align: -75%;
+}
+
+#user{
+    margin-right:30px;
+    font-weight: 700;
+    cursor:pointer;
+}
+
+#icono{
+    margin-right:50px;
 }

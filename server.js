@@ -108,6 +108,14 @@ app.get('/tarea', function (req, res) {
         } else {
           for (const usuario of result) {
             options += `<option value='${usuario.id}'>${usuario.nombre}</option>`;
+
+            //cargamos avatar usuario logeado;
+            if(usuario.id==req.session.idUser){
+              if(usuario.avatar!=""){
+                let imgAvatar=`<img src="${usuario.avatar}"  id="avatarT">`;
+                texto=texto.replace('<span class="fas fa-user" id="icono"></span>',imgAvatar);
+              }
+            }
           }
         }
         texto = texto.split("[ejecutores]").join(options);
@@ -149,14 +157,35 @@ app.get("/datosuser", function (req, res) {
 })
 
 app.post("/datosuser", function (req, res) {
+   //Guardar la imagen como fichero en el servidor
+   let image=req.body.avatar
+   console.log(image);
+   var base64data=image.replace(/^data:image\/jpeg;base64,/,"");
+   var name="avatar"+req.body.usuario+".jpg";
+   fs.writeFile(name, base64data,'base64',function(err){
+     console.log(err);
+   });
   if (req.body.contraseña == "") {
     res.send("noOk")
   } else {
-    connection.query("UPDATE usuario SET nombre = ?, email = ?, password=? WHERE id = ?", [req.body.nombre, req.body.correo, req.body.contraseña, req.session.idUser], function (err, result) {
+    connection.query("UPDATE usuario SET nombre = ?, email = ?, password=?,avatar=? WHERE id = ?", [req.body.nombre, req.body.correo, req.body.contraseña, req.body.avatar, req.session.idUser], function (err, result) {
+     var datos={
+       respuesta:"",
+       avatar:""
+     }
       if (result.affectedRows > 0) {
-        res.send("ok")
+        var datos={
+          resultado:"ok",
+          imagen:req.body.avatar
+        };
+
+        res.send(JSON.stringify(datos));
       } else {
-        res.send("noOk");
+        var datos={
+          resultado:"noOk",
+          imagen:""
+        };
+        res.send(JSON.stringify(datos));
       }
     })
   }
@@ -404,14 +433,13 @@ app.get("/cambioestado/:id?", function (req, res) {
     }})
   })
 
-
-  app.use(express.static('www'));
+app.use(express.static('www'));
 
   // Inicio el servidor
-  var server = app.listen(3000, function () {
+ var server = app.listen(3000, function () {
     console.log('Servidor web iniciado');
   });
-  function formatearFecha(resultado) {
+function formatearFecha(resultado) {
     for (let i = 0; i < resultado.length; i++) {
       var d = new Date(String(resultado[i].fecha))
       var formatFecha = [d.getDate(), d.getMonth() + 1, d.getFullYear()].join('-');
